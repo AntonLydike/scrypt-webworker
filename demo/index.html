@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script type="text/javascript" src="scrypt.worker.wrapper.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+	<link rel="stylesheet" href="style.css">
+	<title>Scrypt WebWorker example</title>
+</head>
+
+<body>
+<div class="bg teal"></div>
+<div class="container white z-depth-1">
+	<h2>Hash with salt</h2>
+	<div class="input-field">
+		<label for="pw">What to hash</label>
+		<input type="text" id="pw">
+	</div>	
+	<div class="input-field">
+		<label for="salt">Salt</label>
+		<input type="text" id="salt">
+	</div>	
+	<a class="btn waves-effect" id="run">Hash!</a>
+
+	<h2>Output</h2>
+	<pre id="out"></pre>
+</div>
+
+<script type="text/javascript">
+
+// initiate Scrypt
+createScryptWorker(
+	{p: 1, r: 8, n: 16384, l: 32}, 
+	'scrypt.worker.build.js'
+).then((worker) => {
+	window.Scrypt = worker;
+})
+
+// a simple function to convert a Uint8 Array to a Hex string
+function HexFromUi8 (Ui8Start) {
+    for (var hex = [], i = 0; i < Ui8Start.length; i++) {
+        hex.push((Ui8Start[i] >>> 4).toString(16));
+        hex.push((Ui8Start[i] & 0xF).toString(16));
+    }
+    return hex.join("");
+}
+
+// a simple function that converts the Ui8 hash to Hex and displays it
+function output (Ui8Hash) {
+	$('#out').text(HexFromUi8(Ui8Hash));
+}
+
+// click listener
+$('#run').click(() => {
+
+	// get pw and salt
+	let pw 	 = $('#pw').val(),
+			salt = $('#salt').val();
+
+	// display message:
+	$('#out').text('calculating...');
+
+	// hash it asynchronously, then display the hash
+	Scrypt.hash(pw, salt).then(output);
+})
+
+</script>
+
+</body>
+</html>
