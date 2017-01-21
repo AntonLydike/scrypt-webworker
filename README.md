@@ -88,7 +88,9 @@ function HexFromUi8 (Ui8Start) {
     return hex.join("");
 }
 ````
+## Demo
 
+You can see the demo code working [here](https://rawgit.com/AntonLydike/scrypt-webworker/master/demo/index.html).
 
 ## License
 
