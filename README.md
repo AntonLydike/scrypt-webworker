@@ -1,7 +1,6 @@
 # The WebWorker based Scrypt project
-===
 
-Scrypt implementation as webworkers.
+Scrypt implementation as webworkers. This uses promises and other Es6 features so I'll have to put it through babel before it can be used for more than very small homebrewed projects...
 
 ## what each file is for:
 
