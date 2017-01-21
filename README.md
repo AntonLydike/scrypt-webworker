@@ -13,7 +13,7 @@ Scrypt implementation as webworkers. This uses promises and other Es6 features s
 
 ### Structure of `scrypt.worker.js`
 
-````
+```` js
 // @build add scrypt.js
 // @build add scrypt.wrapper.js
 // @build add lodash.min.js
@@ -21,7 +21,7 @@ Scrypt implementation as webworkers. This uses promises and other Es6 features s
 
 This part imports Scrypt, then my Scrypt wrapper and then the lodash library.
 
-````
+```` js
 (function (self) {
 	// ...
 }(self))
@@ -29,7 +29,7 @@ This part imports Scrypt, then my Scrypt wrapper and then the lodash library.
 
 This is a self-made webworker helper to easily register actions for a webworker.
 
-````
+```` js
 self.addAction('init', function (settings) {
 	initScrypt(settings, this);
 }, ['n', 'r', 'p', 'l'], {doTest: false})
@@ -43,7 +43,7 @@ self.addAction('hash', function ({passw, salt}) {
 }, ['passw', 'salt'])
 ````
 
-This part registers the init function and the hash method. 
+This part registers the init function and the hash method.
 
 You can pass `doTest:true` in the settings to `createScryptWorker(settings, workerUrl)` in order to perform an initial test run to verify that enough RAM is available etc...
 
@@ -59,7 +59,7 @@ You can pass `doTest:true` in the settings to `createScryptWorker(settings, work
 
 create a new worker like this:
 
-````
+```` js
 createScryptWorker({
 	p: 1, 
 	r: 8, 
@@ -73,7 +73,7 @@ createScryptWorker({
 
 ### Use a worker to calculate a hash
 
-````
+```` js
 Scrypt.hash("passw", "salt").then((Ui8Hash) => {
 	// hash is a Uint8Array containing the hash value
 	let HexHash = HexFromUi8(Ui8Hash);
