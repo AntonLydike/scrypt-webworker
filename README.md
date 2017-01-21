@@ -67,7 +67,7 @@ createScryptWorker({
 	l: 32
 }, '/path/to/scrypt.worker.build.js'
 ).then((worker) => {
-	window Scrypt = worker;
+	window.Scrypt = worker;
 })
 ````
 
